@@ -15,13 +15,10 @@ def load():
 
     trainSet = SiameseDataSet(trainer, transform)
     valSet = SiameseDataSet(val, transform)
-    testSet = SiameseDataSet(get_test_set(), transform)
 
     trainDataLoader = DataLoader(trainSet, shuffle=True, num_workers=2, batch_size=64)
     valDataLoader = DataLoader(valSet, shuffle=True, num_workers=2, batch_size=64)
-    testDataLoader = DataLoader(testSet, shuffle=True, num_workers=2, batch_size=64)
-
-    return trainDataLoader, valDataLoader, testDataLoader
+    return trainDataLoader, valDataLoader
 
 
 def train(model: SiameseNetwork, criterion: TripletMarginLoss, optimiser,
@@ -69,7 +66,7 @@ def train(model: SiameseNetwork, criterion: TripletMarginLoss, optimiser,
 
 
 if __name__ == '__main__':
-    trainData, valData, testData = load()
+    trainData, valData = load()
     print(f"Data loaded")
     # Device configuration
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -78,6 +75,6 @@ if __name__ == '__main__':
     net = SiameseNetwork().to(device)
     # net = SiameseNetwork().cuda()
     optimiser = optim.Adam(net.parameters(), lr=0.0005)
-    epochs = 1
+    epochs = 100
 
     train(net, TripletMarginLoss(), optimiser, trainData, valData, epochs, device)
