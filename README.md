@@ -1,7 +1,7 @@
-# Siamese network to classify Alzheimer's disease
+# Siamese Network
 
-### Pattern Analysis
-This project was developed as an assessment item for course COMP3710 at the University of Queensland.
+### Aim
+This project was developed as an assessment item for course COMP3710 at the University of Queensland. It comprises a Siamese neural net for the binary classification of alzheimers disease.
 
 We create pattern recognition and image processing library for Tensorflow (TF), PyTorch or JAX. This library is created and maintained by The University of Queensland [COMP3710](https://my.uq.edu.au/programs-courses/course.html?course_code=comp3710) students.
 
