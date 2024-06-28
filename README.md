@@ -48,8 +48,7 @@ This project uses the ADNI dataset for Alzheimer's disease. Please format the da
 this repository accordingly.
 
 ```
-siamese-45033746
-├── README.md
+recognition
 ├── modules.py
 ├── dataset.py
 ├── predict.py
