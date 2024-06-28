@@ -1,5 +1,12 @@
 import torch.nn as nn
 
+SIAMESE_FEATURES = 2
+
+"""
+modules.py
+
+define triple siamese convolutional neural network and binary classifer neural net
+"""
 
 class SiameseNetwork(nn.Module):
     """
@@ -30,7 +37,7 @@ class SiameseNetwork(nn.Module):
             nn.Linear(512, 256),
             nn.ReLU(inplace=True),
 
-            nn.Linear(256, 2)
+            nn.Linear(256, SIAMESE_FEATURES)
         )
 
     def forward_once(self, tensor):
@@ -43,6 +50,13 @@ class SiameseNetwork(nn.Module):
         return cnn_output
 
     def forward(self, anchor, positive, negative):
+        """
+        Calls forward on all three images in CNN
+        :param anchor: torch.Tensor
+        :param positive: torch.Tensor
+        :param negative: torch.Tensor
+        :return:
+        """
         # In this function we pass in  triplet images and obtain triplet vectors
         # which are returned
         # REDO
@@ -53,5 +67,20 @@ class SiameseNetwork(nn.Module):
         return anchor_vec, positive_vec, negative_vec
 
 
-if __name__ == "__main__":
-    pass
+class BinaryClassifier(nn.Module):
+    """
+    Binary Classifier Neural Net to discriminate between AD and NC
+    """
+
+    def __init__(self):
+        super().__init__()
+
+        self.fc1 = nn.Sequential(
+            nn.Linear(SIAMESE_FEATURES, 32),
+            nn.ReLU(inplace=True),
+            nn.Linear(32, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, input):
+        return self.fc1(input)

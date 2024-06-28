@@ -12,30 +12,31 @@ During training, a contrastive loss function takes in the features of the networ
 the loss between the anchor and the negative, and minimise the loss between the anchor and the positive.
 
 Once training is completed on the siamese network, we can use the siamese embeddings on the image input to another convolutional neural network,
-this a binary classifier.
+this a binary classifier and outputs a answer for which class (AD or NC) the given image is.
 
 ![Siamese triplet diagram](https://github.com/tweeeb/PatternAnalysis-2023/blob/topic-recognition/recognition/siamese-45033746/assets/triplet_siamese.jpg?raw=true)
 
 ### Data Pre-Processing
 #### Transforms
-Data is pre-proccessed with transforms such as random rotation, and horizontal flip to diversify data and prevent overfitting.
+Data is pre-proccessed to be of size 256x240 and converted to greyscale (so the siamese model takes in 1 channel instead of 3) as these are the only features that matter. No other transformations are done as the input image format is relatively constant.
 
-### Data partitions
+#### Data partitions
 Data is partitioned by patient to prevent data leakage. This is to prevent the model from seeing data from the same patient in the validation set or in the test set while being trained.
 
 ### Project Structure
+### Run
+To train models, run train.py
+
+To see accuracy of models, run predict.py
+
+Please note, the data is retrieved via the rangpur location if on a linux system, and is retrieved via the file structure nominated in the readme on a windows system. Adjustments can be made to the filepath at the top of the dataset.py file if this is not the configuration preferred.
 
 ### Dependencies
 
 - matplotlib 3.7.2
 - numpy 1.24.3
-- Pillow 10.1.0
 - torch 2.1.0
 
-Install project requirements by running the following command
-```
-conda install --yes --file requirements.txt
-```
 ### File Structure
 
 This project uses the ADNI dataset for Alzheimer's disease. Please format the data under the directory AD_NC in 
@@ -50,6 +51,9 @@ siamese-45033746
 ├── train.py
 ├── utils.py
 ├── .gitignore
+├── slurm.sh
+├── assets
+|   └── triplet_siamese.jpg
 └── AD_NC
     ├── test
     |    ├── AD
